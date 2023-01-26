@@ -1,4 +1,4 @@
-# Copyright 2021 VMware, Inc.
+# Copyright 2022 VMware, Inc.
 # SPDX-License-Identifier: Apache-2.0
 
 variable "avi_version" {
@@ -48,19 +48,23 @@ variable "controller_public_address" {
   default     = true
 }
 variable "configure_dns_profile" {
-  description = "Configure Avi DNS Profile for DNS Record Creation for Virtual Services. If set to true the dns_service_domain variable must also be set"
-  type        = bool
-  default     = false
-}
-variable "dns_service_domain" {
-  description = "The DNS Domain that will be available for Virtual Services. Avi will be the Authorative Nameserver for this domain and NS records may need to be created pointing to the Avi Service Engine addresses. An example is demo.Avi.com"
-  type        = string
-  default     = ""
+  description = "Configure a DNS Profile for DNS Record Creation for Virtual Services. Supported types are AWS or AVI. When set to AWS, Route 53 integration will be configured and the dns_profile_route_53_settings variable can be used when the AWS Account used is different than the Avi Controller"
+  type = object({
+    enabled        = bool,
+    type           = string,
+    usable_domains = list(string)
+    aws_profile    = optional(object({ iam_assume_role = string, region = string, vpc_id = string, access_key_id = string, secret_access_key = string }))
+  })
+  default = { enabled = false, type = "AVI", usable_domains = [] }
+  validation {
+    condition     = contains(["AWS", "AVI"], var.configure_dns_profile.type)
+    error_message = "Supported DNS Profile types are 'AWS' or 'AVI'"
+  }
 }
 variable "configure_dns_vs" {
-  description = "Create DNS Virtual Service. The configure_dns_profile and configure_ipam_profile variables must be set to true and their associated configuration variables must also be set"
-  type        = bool
-  default     = false
+  description = "Create Avi DNS Virtual Service. The subnet_name parameter must be an existing AWS Subnet. If the allocate_public_ip parameter is set to true a EIP will be allocated for the VS. The VS IP address will automatically be allocated via the AWS IPAM"
+  type        = object({ enabled = bool, subnet_name = string, allocate_public_ip = bool })
+  default     = { enabled = "false", subnet_name = "", allocate_public_ip = "false" }
 }
 variable "aws_secret_key" {
   description = "The AWS Secret Key that will be used by Terraform and the Avi Controller resources"
@@ -87,10 +91,5 @@ variable "custom_vpc_id" {
 variable "custom_subnet_ids" {
   description = "This field can be used to specify a list of existing VPC Subnets for the controller and SEs. The create-networking variable must also be set to false for this network to be used."
   type        = list(string)
-  default     = null
-}
-variable "dns_vs_settings" {
-  description = "Settings for the DNS Virtual Service. The subnet_name must be an existing AWS Subnet. If the allocate_public_ip option is set to true a EIP will be allocated for the VS. The VS IP address will automatically be allocated via the AWS IPAM. Example:{ subnet_name = \"subnet-dns\", allocate_public_ip = \"true\" }"
-  type        = object({ subnet_name = string, allocate_public_ip = bool })
   default     = null
 }
