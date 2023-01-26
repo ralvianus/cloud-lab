@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 terraform {
+  required_version = ">= 1.3.7"
   cloud {
     organization = "ralvianus-lab"
     ## Required for Terraform Enterprise; Defaults to app.terraform.io for Terraform Cloud
@@ -11,12 +12,26 @@ terraform {
       tags = ["lab", "ako"]
     }
   }
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.37.0"
+    }
+    null = {
+      source  = "hashicorp/null"
+      version = "3.2.0"
+    }
+  }
+}
+
+provider "aws" {
+  region = "us-west-1"
 }
 
 }
 module "avi_controller_aws" {
-  source  = "slarimore02/avi-controller-aws/aws"
-  version = "1.0.9"
+  source  = "vmware/avi-alb-deployment-aws/aws"
+  version = "1.0.6"
 
   region                    = "us-west-1"
   aws_access_key            = var.aws_access_key
