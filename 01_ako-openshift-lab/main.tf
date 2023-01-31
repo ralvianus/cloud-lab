@@ -36,7 +36,7 @@ module "avi_controller_aws" {
   controller_password  = var.controller_password
   key_pair_name        = var.key_pair_name
   #private_key_contents = var.private_key_contents
-  private_key_path = var.private_key_path
+  private_key_path = data.aws_s3_object.private_key
   name_prefix = var.name_prefix
   #controller_ha             = var.controller_ha
   controller_public_address = var.controller_public_address
