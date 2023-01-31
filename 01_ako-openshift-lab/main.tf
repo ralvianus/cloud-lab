@@ -12,20 +12,12 @@ terraform {
       tags = ["lab", "ako"]
     }
   }
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 4.37.0"
-    }
-    null = {
-      source  = "hashicorp/null"
-      version = "3.2.0"
-    }
-  }
 }
 
 provider "aws" {
   region = "us-west-1"
+  access_key = var.aws_access_key
+  secret_key = var.aws_secret_key
 }
 
 module "avi_controller_aws" {
@@ -43,11 +35,11 @@ module "avi_controller_aws" {
   avi_cidr_block            = var.avi_cidr_block
   controller_password       = var.controller_password
   key_pair_name             = var.key_pair_name
-  private_key_path          = var.private_key_path
+  private_key_contents      = var.private_key_contents
   name_prefix               = var.name_prefix
-  controller_ha             = var.controller_ha
+  #controller_ha             = var.controller_ha
   controller_public_address = var.controller_public_address
-  configure_dns_profile     = var.configure_dns_profile
-  configure_dns_vs          = var.configure_dns_vs
+  #configure_dns_profile     = var.configure_dns_profile
+  #configure_dns_vs          = var.configure_dns_vs
   custom_tags               = { "Role" : "Avi-Controller", "Owner" : "ralvianus", "Department" : "VCN", "shutdown_policy" : "noshut" }
 }
