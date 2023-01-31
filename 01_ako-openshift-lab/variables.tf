@@ -9,6 +9,12 @@ variable "key_pair_name" {
   description = "The name of the existing EC2 Key pair that will be used to authenticate to the Avi Controller"
   type        = string
 }
+variable "private_key_contents" {
+  description = "The contents of the private key for the EC2 Key pair used for authenticating to the Avi Controller. Either private_key_path or private_key_contents must be supplied."
+  type        = string
+  sensitive   = true
+  default     = null
+}
 variable "controller_password" {
   description = "The password that will be used authenticating with the Avi Controller. This password be a minimum of 8 characters and contain at least one each of uppercase, lowercase, numbers, and special characters"
   type        = string
