@@ -12,7 +12,7 @@ variable "key_pair_name" {
 variable "private_key_contents" {
   description = "The contents of the private key for the EC2 Key pair used for authenticating to the Avi Controller. Either private_key_path or private_key_contents must be supplied."
   type        = string
-  #sensitive   = true
+  sensitive   = true
   default     = null
 }
 variable "controller_password" {
@@ -93,4 +93,25 @@ variable "custom_subnet_ids" {
   description = "This field can be used to specify a list of existing VPC Subnets for the controller and SEs. The create-networking variable must also be set to false for this network to be used."
   type        = list(string)
   default     = null
+}
+variable "jwt_token" {
+  description = "This field can be used to specify JWT token to register controller"
+  type        = string
+  default     = null
+}
+variable "email" {
+  description = "This field can be used to specify email address to register controller"
+  type        = string
+  default     = null
+}
+variable "organization_id" {
+  description = "This field can be used to specify ORG ID to register controller"
+  type        = string
+  default     = null
+}
+variable "register_controller" {
+  description = "If enabled is set to true the controller will be registered and licensed with Avi Cloud Services. The Long Organization ID (organization_id) can be found from https://console.cloud.vmware.com/csp/gateway/portal/#/organization/info. The jwt_token can be retrieved at https://portal.avipulse.vmware.com/portal/controller/auth/cspctrllogin"
+  sensitive   = false
+  type        = object({ enabled = bool, jwt_token = string, email = string, organization_id = string })
+  default     = { enabled = "false", jwt_token = "", email = "", organization_id = "" }
 }
