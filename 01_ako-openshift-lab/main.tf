@@ -37,8 +37,8 @@ module "avi_controller_aws" {
   name_prefix               = var.name_prefix
   controller_public_address = var.controller_public_address
 
-  register_controller = { enabled = "true", jwt_token = var.jwt_token, email = var.email, organization_id = var.organization_id }
-  #configure_dns_profile     = var.configure_dns_profile
-  #configure_dns_vs          = var.configure_dns_vs
-  custom_tags = { "Role" : "Avi-Controller", "Owner" : "ralvianus", "Department" : "VCN", "shutdown_policy" : "noshut" }
+  register_controller   = { enabled = "true", jwt_token = var.jwt_token, email = var.email, organization_id = var.organization_id }
+  configure_dns_profile = var.configure_dns_profile
+  configure_dns_vs      = var.configure_dns_vs
+  custom_tags           = { "Role" : "Avi-Controller", "Owner" : "ralvianus", "Department" : "VCN", "shutdown_policy" : "noshut" }
 }
