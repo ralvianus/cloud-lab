@@ -24,18 +24,19 @@ module "avi_controller_aws" {
   source  = "vmware/avi-alb-deployment-aws/aws"
   version = "1.0.6"
 
-  region     = var.aws_region
-  create_networking         = var.create_networking
-  create_iam                = var.create_iam
-  avi_version               = var.avi_version
-  custom_vpc_id             = var.custom_vpc_id
-  custom_subnet_ids         = var.custom_subnet_ids
-  avi_cidr_block            = var.avi_cidr_block
-  controller_password       = var.controller_password
-  key_pair_name             = var.key_pair_name
-  private_key_contents      = var.private_key_contents
-  name_prefix               = var.name_prefix
-  controller_public_address = var.controller_public_address
+  region                       = var.aws_region
+  create_networking            = var.create_networking
+  create_iam                   = var.create_iam
+  avi_version                  = var.avi_version
+  custom_vpc_id                = var.custom_vpc_id
+  custom_subnet_ids            = var.custom_subnet_ids
+  custom_controller_subnet_ids = var.custom_controller_subnet_ids
+  avi_cidr_block               = var.avi_cidr_block
+  controller_password          = var.controller_password
+  key_pair_name                = var.key_pair_name
+  private_key_contents         = var.private_key_contents
+  name_prefix                  = var.name_prefix
+  controller_public_address    = var.controller_public_address
 
   register_controller   = { enabled = "true", jwt_token = var.jwt_token, email = var.email, organization_id = var.organization_id }
   configure_dns_profile = var.configure_dns_profile
