@@ -1,6 +1,12 @@
 # Copyright 2022 VMware, Inc.
 # SPDX-License-Identifier: Apache-2.0
 
+
+variable "aws_region" {
+  description = "The region for AWS"
+  type        = string
+  default     = "ap-southeast-1"
+}
 variable "avi_version" {
   description = "The AVI Controller version that will be deployed"
   type        = string

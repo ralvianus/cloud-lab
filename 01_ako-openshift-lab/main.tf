@@ -15,7 +15,7 @@ terraform {
 }
 
 provider "aws" {
-  region     = "us-west-1"
+  region     = var.aws_region
   access_key = var.aws_access_key
   secret_key = var.aws_secret_key
 }
@@ -24,7 +24,6 @@ module "avi_controller_aws" {
   source  = "vmware/avi-alb-deployment-aws/aws"
   version = "1.0.6"
 
-  region                    = "ap-southeast-1"
   create_networking         = var.create_networking
   create_iam                = var.create_iam
   avi_version               = var.avi_version
