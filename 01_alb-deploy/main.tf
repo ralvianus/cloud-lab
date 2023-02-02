@@ -24,6 +24,7 @@ module "avi_controller_aws" {
   source  = "vmware/avi-alb-deployment-aws/aws"
   version = "1.0.6"
 
+  region     = var.aws_region
   create_networking         = var.create_networking
   create_iam                = var.create_iam
   avi_version               = var.avi_version
