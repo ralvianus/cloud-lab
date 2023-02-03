@@ -42,7 +42,7 @@ module "avi_controller_aws_a" {
   controller_password          = var.controller_password
   key_pair_name                = var.key_pair_name_a
   private_key_contents         = var.private_key_contents
-  name_prefix                  = var.name_prefix
+  name_prefix                  = "${var.name_prefix}a"
   controller_public_address    = var.controller_public_address
 
   register_controller   = { enabled = "true", jwt_token = var.jwt_token, email = var.email, organization_id = var.organization_id }
@@ -67,7 +67,7 @@ module "avi_controller_aws_b" {
   controller_password          = var.controller_password
   key_pair_name                = var.key_pair_name_b
   private_key_contents         = var.private_key_contents
-  name_prefix                  = var.name_prefix
+  name_prefix                  = "${var.name_prefix}b"
   controller_public_address    = var.controller_public_address
 
   register_controller   = { enabled = "true", jwt_token = var.jwt_token, email = var.email, organization_id = var.organization_id }
