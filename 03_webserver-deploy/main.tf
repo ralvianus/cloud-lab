@@ -28,7 +28,7 @@ data "aws_ami" "webserver" {
 }
 
 data "aws_kms_alias" "ebs" {
-  name  = "alias/aws/ebs"
+  name = "alias/aws/ebs"
 }
 
 resource "aws_security_group" "webserver_sg_a" {
@@ -80,7 +80,7 @@ resource "aws_instance" "webserver_instance" {
     volume_size           = 20
     delete_on_termination = true
     encrypted             = true
-    kms_key_id            = data.aws_kms_alias.ebs[0].target_key_arn 
+    kms_key_id            = data.aws_kms_alias.ebs[0].target_key_arn
   }
   subnet_id                   = var.custom_subnet_ids[count.index]
   vpc_security_group_ids      = aws_security_group.webserver_sg[0].id
