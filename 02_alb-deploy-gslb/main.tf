@@ -17,13 +17,12 @@ terraform {
 provider "aws" {
   access_key = var.aws_access_key
   secret_key = var.aws_secret_key
-}
-
-provider "aws" {
   alias  = "a"
   region = var.aws_region_a
 }
 provider "aws" {
+  access_key = var.aws_access_key
+  secret_key = var.aws_secret_key
   alias  = "b"
   region = var.aws_region_b
 }
@@ -38,7 +37,7 @@ module "avi_controller_aws_a" {
   create_iam            = var.create_iam
   controller_ha         = var.controller_ha
   avi_version           = var.avi_version
-  custom_subnet_ids            = var.custom_subnet_ids
+  custom_subnet_ids            = var.custom_subnet_ids_a
   avi_cidr_block               = var.avi_cidr_block
   controller_password          = var.controller_password
   key_pair_name                = var.key_pair_name_a
@@ -63,7 +62,7 @@ module "avi_controller_aws_b" {
   create_iam            = var.create_iam
   controller_ha         = var.controller_ha
   avi_version           = var.avi_version
-  custom_subnet_ids            = var.custom_subnet_ids
+  custom_subnet_ids            = var.custom_subnet_ids_b
   avi_cidr_block               = var.avi_cidr_block
   controller_password          = var.controller_password
   key_pair_name                = var.key_pair_name_b

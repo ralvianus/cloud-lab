@@ -136,6 +136,16 @@ variable "custom_subnet_ids" {
   type        = list(string)
   default     = null
 }
+variable "custom_subnet_ids_a" {
+  description = "This field can be used to specify a list of existing VPC Subnets for the controller and SEs. The create-networking variable must also be set to false for this network to be used."
+  type        = list(string)
+  default     = ["subnet-0b83764090556e1ea"]
+}
+variable "custom_subnet_ids_b" {
+  description = "This field can be used to specify a list of existing VPC Subnets for the controller and SEs. The create-networking variable must also be set to false for this network to be used."
+  type        = list(string)
+  default     = ["subnet-015f40b40f5472c77"]
+}
 variable "custom_controller_subnet_ids" {
   description = "This field can be used to specify a list of existing VPC Subnets for the Controllers.  The create-networking variable must also be set to false for this network to be used."
   type        = list(string)
