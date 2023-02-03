@@ -28,10 +28,11 @@ data "aws_ami" "webserver" {
 }
 
 data "aws_kms_alias" "ebs" {
+  count = 1
   name = "alias/aws/ebs"
 }
 
-resource "aws_security_group" "webserver_sg_a" {
+resource "aws_security_group" "webserver_sg" {
   count       = var.create_firewall_rules ? 1 : 0
   name        = "${var.name_prefix}-webserver-sg"
   description = "Allow Traffic for webserver"
@@ -74,7 +75,7 @@ resource "aws_security_group" "webserver_sg_a" {
 resource "aws_instance" "webserver_instance" {
   count         = 2
   instance_type = "t2.micro"
-  ami           = aws_ami.webserver.id
+  ami           = data.aws_ami.webserver.id
   key_name      = var.key_pair_name
   root_block_device {
     volume_size           = 20
@@ -83,7 +84,7 @@ resource "aws_instance" "webserver_instance" {
     kms_key_id            = data.aws_kms_alias.ebs[0].target_key_arn
   }
   subnet_id                   = var.custom_subnet_ids[count.index]
-  vpc_security_group_ids      = aws_security_group.webserver_sg[0].id
+  vpc_security_group_ids      = [aws_security_group.webserver_sg[0].id]
   associate_public_ip_address = false
   tags = {
     Name = "${var.name_prefix}-webserver-${count.index + 1}"
