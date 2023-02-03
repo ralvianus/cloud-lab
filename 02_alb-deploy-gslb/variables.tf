@@ -40,13 +40,7 @@ variable "private_key_path" {
   sensitive   = false
   default     = null
 }
-variable "private_key_contents_a" {
-  description = "The contents of the private key for the EC2 Key pair used for authenticating to the Avi Controller. Either private_key_path or private_key_contents must be supplied."
-  type        = string
-  sensitive   = true
-  default     = null
-}
-variable "private_key_contents_b" {
+variable "private_key_contents" {
   description = "The contents of the private key for the EC2 Key pair used for authenticating to the Avi Controller. Either private_key_path or private_key_contents must be supplied."
   type        = string
   sensitive   = true
