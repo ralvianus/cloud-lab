@@ -9,7 +9,7 @@ terraform {
     hostname = "app.terraform.io"
 
     workspaces {
-      tags = ["lab", "ako"]
+      tags = ["lab", "uat"]
     }
   }
 }

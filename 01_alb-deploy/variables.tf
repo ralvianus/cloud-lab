@@ -132,3 +132,28 @@ variable "register_controller" {
   type        = object({ enabled = bool, jwt_token = string, email = string, organization_id = string })
   default     = { enabled = "false", jwt_token = "", email = "", organization_id = "" }
 }
+variable "create_firewall_rules" {
+  description = "This variable controls the Security Group creation for the Avi deployment. When set to false the necessary security group rules must be in place before the deployment and set with the firewall_custom_security_group_ids variable"
+  type        = bool
+  default     = "true"
+}
+variable "firewall_controller_allow_source_range" {
+  description = "The IP range allowed to connect to the Avi Controller. Access from all IP ranges will be allowed by default"
+  type        = string
+  default     = "0.0.0.0/0"
+}
+variable "controller_ebs_encryption" {
+  description = "Enable encryption on the Controller EBS Root Volume.  The AWS Managed EBS KMS key will be used if no key is provided with the controller_ebs_encryption_key_arn variable"
+  type        = bool
+  default     = "true"
+}
+variable "controller_ebs_encryption_key_arn" {
+  description = "AWS Resource Name of an existing KMS key for the Controller EBS (controller_ebs_encryption must be set to true)"
+  type        = string
+  default     = null
+}
+variable "custom_tags" {
+  description = "Custom tags added to AWS Resources created by the module"
+  type        = map(string)
+  default     = {}
+}
