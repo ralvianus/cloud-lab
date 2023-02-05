@@ -100,7 +100,7 @@ resource "aws_ec2_tag" "webserver_1_tag" {
   key         = each.key
   value       = each.value
 }
-resource "aws_ec2_tag" "webserver_3_tag" {
+resource "aws_ec2_tag" "webserver_2_tag" {
   for_each    = var.custom_tags
   resource_id = aws_instance.webserver_instance[1].id
   key         = each.key
